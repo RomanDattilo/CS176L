@@ -1,40 +1,63 @@
-
 import java.util.Scanner;
 
+
+
 public class Problem2 {
-    public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-			System.out.print(" what is your name?: ");
-			String name = scanner.nextLine();
-			System.out.println("hello " + name + ", how many exams have you taken?");
+	
 
-			int examAmount = 0;
-			while (examAmount <= 0) {
-			    System.out.print("Answer: ");
-			    examAmount = scanner.nextInt();
-			    if (examAmount <= 0) {
-			        System.out.println("Please enter a valid number of exams.");
-			    }
-			}
 
-			int totalScore = 0;
 
-			for (int i = 1; i <= examAmount; i++) {
-			    int score;
-			    do {
-			        System.out.print("Please enter the score of exam " + i + " : ");
-			        score = scanner.nextInt();
-			        if (score < 0 || score > 100) {
-			            System.out.println("Invalid score! Please give me the score of exam " + i );
-			        }
-			    } while (score < 0 || score > 100);
+	    public static void main(String[] args) {
+	    	
+	        Scanner scanner = new Scanner(System.in);
 
-			    totalScore += score;
-			}
+	        System.out.print("Enter a positive number: ");
+	        int num1 = scanner.nextInt();
+            while(num1 < 0 || num1 > 1000){
+            System.out.print("Enter a positive number: ");
+            num1 = scanner.nextInt();
+            }
+	        System.out.print("Enter another positive number: ");
+	        int num2 = scanner.nextInt();
+	        while(num2 < 0 || num2 > 1000){
+	            System.out.print("Enter a positive number: ");
+	            num2 = scanner.nextInt();
+	        }
+	        int gcd = calculateGCD(num1, num2);
 
-			double average = totalScore / examAmount;
+	        System.out.println("The GCD of " + num1 + " and " + num2 + " is " + gcd);
 
-			System.out.println("Hi, " + name + ", your average score of " + examAmount + " exams is " + average);
-		}
-    }
+	        scanner.close();
+	    }
+
+	    public static int getValidInput(Scanner scanner) {
+	       
+	    	   
+	       
+	    	int num;
+	     
+	        while (true) {
+	            try {
+	                num = Integer.parseInt(scanner.nextLine());
+	                if (num >= 0 && num <= 1000) {
+	                    return num;
+	                } else {
+	                    System.out.println("Please enter a number in the range 0 to 1000.");
+	                }
+	            } catch (NumberFormatException e) {
+	                System.out.println("This is an invalid number. Please enter a correct number.");
+	            }
+	        }
+	    }
+
+	    public static int calculateGCD(int num1, int num2) {
+	        while (num2 != 0) {
+	            int temp = num2;
+	            num2 = num1 % num2;
+	            num1 = temp;
+	        }
+	        return num1;
+	    }
+	{}
+
 }
