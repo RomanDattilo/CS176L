@@ -1,63 +1,39 @@
 import java.util.Scanner;
 
-
-
 public class Problem2 {
-	
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Enter the number of elements in the array: ");
+        int n = scanner.nextInt();
 
+        int[] arr = new int[n];
 
-	    public static void main(String[] args) {
-	    	
-	        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the elements of the array: ");
+        for (int i = 0; i < n; i++) {
+            arr[i] = scanner.nextInt();
+        }
 
-	        System.out.print("Enter a positive number: ");
-	        int num1 = scanner.nextInt();
-            while(num1 < 0 || num1 > 1000){
-            System.out.print("Enter a positive number: ");
-            num1 = scanner.nextInt();
+        int firstIndex = -1;
+        int firstRepeatingNumber = -1;
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    if (firstIndex == -1 || j < firstIndex) {
+                        firstIndex = j;
+                        firstRepeatingNumber = arr[j];
+                    }
+                }
             }
-	        System.out.print("Enter another positive number: ");
-	        int num2 = scanner.nextInt();
-	        while(num2 < 0 || num2 > 1000){
-	            System.out.print("Enter a positive number: ");
-	            num2 = scanner.nextInt();
-	        }
-	        int gcd = calculateGCD(num1, num2);
+        }
 
-	        System.out.println("The GCD of " + num1 + " and " + num2 + " is " + gcd);
+        if (firstRepeatingNumber != -1) {
+            System.out.println("First repeating element is " + firstRepeatingNumber);
+        } else {
+            System.out.println("No repeating numbers found.");
+        }
 
-	        scanner.close();
-	    }
-
-	    public static int getValidInput(Scanner scanner) {
-	       
-	    	   
-	       
-	    	int num;
-	     
-	        while (true) {
-	            try {
-	                num = Integer.parseInt(scanner.nextLine());
-	                if (num >= 0 && num <= 1000) {
-	                    return num;
-	                } else {
-	                    System.out.println("Please enter a number in the range 0 to 1000.");
-	                }
-	            } catch (NumberFormatException e) {
-	                System.out.println("This is an invalid number. Please enter a correct number.");
-	            }
-	        }
-	    }
-
-	    public static int calculateGCD(int num1, int num2) {
-	        while (num2 != 0) {
-	            int temp = num2;
-	            num2 = num1 % num2;
-	            num1 = temp;
-	        }
-	        return num1;
-	    }
-	{}
-
+        scanner.close();
+    }
 }

@@ -2,26 +2,46 @@ import java.util.Scanner;
 
 public class Problem3 {
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-			boolean hasNumbers = true;
-			
-			while (hasNumbers) {
-			    System.out.print("Give a sentence: ");
-			    String userInput = scanner.nextLine();
-			    hasNumbers = false;
+        Scanner scanner = new Scanner(System.in);
 
-			    for (int i = 0; i < userInput.length(); i++) {
-			        char currentChar = userInput.charAt(i);
-			        if (currentChar >= '0' && currentChar <= '9') {
-			            hasNumbers = true;
-			            System.out.println(userInput + " contains numerical characters, fix it.");
-			            break;
-			        }
-			        
-			    }
+        System.out.print("Enter the number of elements in the array: ");
+        int n = scanner.nextInt();
 
-			    if (!hasNumbers) {
-			        System.out.println("There aren't any numerical characters. Good job.");
-		}
+        int[] ia = new int[n];
+
+        System.out.println("Enter the elements of the array: ");
+        for (int i = 0; i < n; i++) {
+            ia[i] = scanner.nextInt();
+        }
+
+        int firstNonRepeatingNumber = findFirstNonRepeatingNumber(ia);
+
+        if (firstNonRepeatingNumber != -1) {
+            System.out.println("First non-repeating number is: " + firstNonRepeatingNumber);
+        } else {
+            System.out.println("No non-repeating number found.");
+        }
+
+        scanner.close();
     }
-        }}}
+
+    public static int findFirstNonRepeatingNumber(int[] ia) {
+        for (int i = 0; i < ia.length; i++) {
+            boolean isUnique = true;
+
+            for (int j = 0; j < ia.length; j++) {
+                if (i != j && ia[i] == ia[j]) {
+                    isUnique = false;
+                    break;
+                }
+            }
+
+            if (isUnique) {
+                return ia[i];
+            }
+        }
+
+        return -1;
+    }
+}
+
