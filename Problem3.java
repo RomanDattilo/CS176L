@@ -1,47 +1,51 @@
+
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Problem3 {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+	
+	
+	    public static void main(String[] args) {
+	        Scanner scanner = new Scanner(System.in);
+	        System.out.print("Enter a string: ");
+	        String inputBlah = scanner.nextLine();
+	        scanner.close();
 
-        System.out.print("Enter the number of elements in the array: ");
-        int n = scanner.nextInt();
+	        String outputBlah = rearrangeString(inputBlah);
+	        System.out.println(outputBlah);
+	    }
 
-        int[] ia = new int[n];
+	    public static String rearrangeString(String inputStr) {
+	        
+	        StringBuilder alphabet = new StringBuilder();
+	        StringBuilder digit = new StringBuilder();
 
-        System.out.println("Enter the elements of the array: ");
-        for (int i = 0; i < n; i++) {
-            ia[i] = scanner.nextInt();
-        }
+	        for (char c : inputStr.toCharArray()) {
+	            if (Character.isLetter(c)) {
+	                alphabet.append(c);
+	            } else if (Character.isDigit(c)) {
+	                digit.append(c);
+	            }
+	        }
 
-        int firstNonRepeatingNumber = findFirstNonRepeatingNumber(ia);
+	        
+	        char[] sortedAlphabets = alphabet.toString().toCharArray();
+	        Arrays.sort(sortedAlphabets);
 
-        if (firstNonRepeatingNumber != -1) {
-            System.out.println("First non-repeating number is: " + firstNonRepeatingNumber);
-        } else {
-            System.out.println("No non-repeating number found.");
-        }
+	        
+	        int sumOfDigits = 0;
+	        for (char digits : digit.toString().toCharArray()) {
+	            sumOfDigits += Character.getNumericValue(digits);
+	        }
 
-        scanner.close();
-    }
+	        
+	        StringBuilder result = new StringBuilder();
+	        result.append(sortedAlphabets);
+	        result.append(sumOfDigits);
 
-    public static int findFirstNonRepeatingNumber(int[] ia) {
-        for (int i = 0; i < ia.length; i++) {
-            boolean isUnique = true;
+	        return result.toString();
+	    }
+	}
 
-            for (int j = 0; j < ia.length; j++) {
-                if (i != j && ia[i] == ia[j]) {
-                    isUnique = false;
-                    break;
-                }
-            }
-
-            if (isUnique) {
-                return ia[i];
-            }
-        }
-
-        return -1;
-    }
-}
 
