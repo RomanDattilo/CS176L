@@ -1,39 +1,46 @@
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Problem2 {
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter the number of elements in the array: ");
-        int n = scanner.nextInt();
-
-        int[] arr = new int[n];
-
-        System.out.println("Enter the elements of the array: ");
-        for (int i = 0; i < n; i++) {
-            arr[i] = scanner.nextInt();
+        try {
+            checkForDuplicates(getNumbersFromUser());
+            System.out.println("No duplicates found.");
+        } catch (DuplicateNumberException e) {
+            System.err.println("Duplicate number found: " + e.getNumber());
         }
+    }
 
-        int firstIndex = -1;
-        int firstRepeatingNumber = -1;
+    static Set<Integer> getNumbersFromUser() {
+        try (Scanner scanner = new Scanner(System.in)) {
+			Set<Integer> numbers = new HashSet<>();
 
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] == arr[j]) {
-                    if (firstIndex == -1 || j < firstIndex) {
-                        firstIndex = j;
-                        firstRepeatingNumber = arr[j];
-                    }
-                }
+			System.out.print("Enter the number of integers: ");
+			int count = scanner.nextInt();
+
+			System.out.println("Enter the integers:");
+			for (int i = 0; i < count; i++) {
+			    int number = scanner.nextInt();
+			    numbers.add(number);
+			}
+
+			return numbers;
+		}
+    }
+
+    static void checkForDuplicates(Set<Integer> numbers) throws DuplicateNumberException {
+        Set<Integer> seenNumbers = new HashSet<>();
+        for (int number : numbers) {
+            if (!seenNumbers.add(number)) {
+                throw new DuplicateNumberException(number);
             }
         }
-
-        if (firstRepeatingNumber != -1) {
-            System.out.println("First repeating element is " + firstRepeatingNumber);
-        } else {
-            System.out.println("No repeating numbers found.");
-        }
-
-        scanner.close();
     }
 }
+
+
+   
+    
+
